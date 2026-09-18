@@ -6,9 +6,9 @@
 
 ## See it in action
 
-[![Watch the 76-second Your Signal product demo](artifacts/your-signal-demo-thumbnail-1280x688.jpg)](artifacts/your-signal-demo-social.mp4)
+[![Watch the 76-second Your Signal product demo](artifacts/your-signal-demo-thumbnail-1280x688.jpg)](https://mithrilman.github.io/your-signal/artifacts/your-signal-demo-social.mp4)
 
-**[Watch the 76-second product demo →](artifacts/your-signal-demo-social.mp4)** See a real X timeline move from feed noise to a personal, reversible signal—without artificial camera movement or staged slides.
+**[Watch the 76-second product demo →](https://mithrilman.github.io/your-signal/artifacts/your-signal-demo-social.mp4)** See a real X timeline move from feed noise to a personal, reversible signal—without artificial camera movement or staged slides.
 
 ![Your Signal settings with personal filtering controls](store-assets/screenshots/your-signal-dashboard-1280x800.png)
 
