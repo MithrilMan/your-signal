@@ -4,6 +4,10 @@
 
 [Source code](https://github.com/MithrilMan/your-signal) · [Privacy policy](PRIVACY.md) · [Security](SECURITY.md) · MIT licensed
 
+![Your Signal settings with personal filtering controls](store-assets/screenshots/your-signal-dashboard-1280x800.png)
+
+![Your Signal applied to a synthetic X timeline](store-assets/screenshots/your-signal-x-feed-1280x800.png)
+
 ## What it does
 
 - Scores visible X posts for relevance, substance, practical value, promotion, and engagement bait.
