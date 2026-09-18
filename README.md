@@ -4,6 +4,12 @@
 
 [Download releases](https://github.com/MithrilMan/your-signal/releases) · [Source code](https://github.com/MithrilMan/your-signal) · [Privacy policy](PRIVACY.md) · [Security](SECURITY.md) · MIT licensed
 
+## See it in action
+
+[![Watch the 76-second Your Signal product demo](artifacts/your-signal-demo-thumbnail-1280x688.jpg)](artifacts/your-signal-demo-social.mp4)
+
+**[Watch the 76-second product demo →](artifacts/your-signal-demo-social.mp4)** See a real X timeline move from feed noise to a personal, reversible signal—without artificial camera movement or staged slides.
+
 ![Your Signal settings with personal filtering controls](store-assets/screenshots/your-signal-dashboard-1280x800.png)
 
 ![Your Signal applied to a synthetic X timeline](store-assets/screenshots/your-signal-x-feed-1280x800.png)
@@ -75,6 +81,7 @@ tests/             Unit, UI, native MV3, and X fixture tests
 eval/              Synthetic evaluation corpus and metrics
 scripts/build.py   Deterministic extension package builder
 docs/              Architecture and publication material
+artifacts/         Launch-ready demo media and editing recipe
 ```
 
 ## Privacy and platform scope

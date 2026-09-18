@@ -9,6 +9,8 @@ node_modules/
 release/
 test-results/
 .workbench/
+.memories/
+artifacts/demo-live/your-signal-theme.m4a
 store-assets/*.zip
 eval/*results*.jsonl
 eval/*report.json
