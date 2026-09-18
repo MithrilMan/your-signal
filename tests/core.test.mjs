@@ -23,8 +23,7 @@ test('stored profiles reject invalid identities and names, deduplicate and strip
   assert.deepEqual(C.profiles({}),[]);
   assert.equal(C.profiles(Array.from({length:25},()=>({...valid,id:crypto.randomUUID()}))).length,20);
 });
-test('default settings are off and follow system appearance',()=>{assert.equal(C.DEFAULTS.enabled,false);assert.equal(C.DEFAULTS.searchEnabled,false);assert.equal(C.DEFAULTS.hideAds,false);assert.equal(C.DEFAULTS.theme,'system');assert.equal(C.settings({theme:'dark'}).theme,'dark');assert.equal(C.settings({theme:'neon'}).theme,'system');});
-test('ad removal is a normalized local setting outside saved scoring profiles',()=>{assert.equal(C.settings({hideAds:true}).hideAds,true);assert.equal(Object.hasOwn(C.profileSettings({...C.DEFAULTS,hideAds:true}),'hideAds'),false);});
+test('default settings are off and follow system appearance',()=>{assert.equal(C.DEFAULTS.enabled,false);assert.equal(C.DEFAULTS.searchEnabled,false);assert.equal(C.DEFAULTS.theme,'system');assert.equal(C.settings({theme:'dark'}).theme,'dark');assert.equal(C.settings({theme:'neon'}).theme,'system');});
 test('hide is preserved in settings and saved profiles without changing the default',()=>{
   assert.equal(C.settings({behavior:'hide'}).behavior,'hide');assert.equal(C.profileSettings({behavior:'hide'}).behavior,'hide');assert.equal(C.DEFAULTS.behavior,'dim');
 });

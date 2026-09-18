@@ -1,0 +1,50 @@
+name: Publish release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Validate tag and package versions
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const tag=process.env.RELEASE_TAG;
+          const packageVersion=JSON.parse(readFileSync('package.json')).version;
+          const manifestVersion=JSON.parse(readFileSync('extension/manifest.json')).version;
+          if(tag !== `v${packageVersion}` || packageVersion !== manifestVersion){
+            throw new Error(`Tag ${tag}, package ${packageVersion}, and manifest ${manifestVersion} must match.`);
+          }
+          NODE
+      - run: npm test
+      - run: python -m pip install pytest
+      - run: python -m pytest -q eval/tests
+      - run: python eval/run.py eval/examples.jsonl
+      - run: python scripts/build.py
+      - name: Generate checksum
+        working-directory: release
+        run: sha256sum your-signal-extension.zip > SHA256SUMS.txt
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" release/your-signal-extension.zip release/SHA256SUMS.txt --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" release/your-signal-extension.zip release/SHA256SUMS.txt --verify-tag --title "Your Signal $GITHUB_REF_NAME" --generate-notes
+          fi

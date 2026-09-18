@@ -63,8 +63,6 @@ article[data-testid="tweet"].oya-collapse.oya-peek-closing > :not([data-oya-host
 }
 article[data-testid="tweet"].oya-hide,
 [data-testid="cellInnerDiv"].oya-hide-cell { display:none !important; }
-article[data-testid="tweet"].oya-ad-hide,
-[data-testid="cellInnerDiv"].oya-ad-hide-cell { display:none !important; }
 [data-oya-host] { box-sizing:border-box; }
 @media(prefers-reduced-motion:reduce){
   article[data-testid="tweet"].oya-dim > :not([data-oya-host]),

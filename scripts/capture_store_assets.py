@@ -61,7 +61,6 @@ def main() -> None:
         "behavior": "collapse",
         "showBadges": True,
         "searchEnabled": False,
-        "hideAds": False,
         "dailyLimit": 250,
         "theme": "system",
     }))

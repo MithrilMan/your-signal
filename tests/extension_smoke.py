@@ -288,11 +288,6 @@ def main():
             assert options.locator('#preview-banner').is_hidden()
             assert options.evaluate('chrome.runtime.id') == extension_id
             options.locator('[data-panel="privacy"]').click()
-            assert options.locator('#hide-ads').is_checked() is False
-            options.locator('#hide-ads').check()
-            wait_settings(options, {'hideAds': True})
-            options.locator('#hide-ads').uncheck()
-            wait_settings(options, {'hideAds': False})
             assert send(options, {'type': 'UI_STATE'})['settings']['theme'] == 'dark'
             options.locator('[data-panel="algorithm"]').click()
 
@@ -384,14 +379,13 @@ def main():
             assert response['data'] == public, response
             assert FAKE_KEY not in json.dumps(response), response
             quick = content_evaluate(cdp, content_context,
-                "chrome.runtime.sendMessage({type:'SAVE_QUICK_SETTINGS',patch:{interests:'Distributed systems, humane interfaces',weights:{relevance:45},threshold:63,minimumMargin:.55,behavior:'label',hideAds:true}})")
+                "chrome.runtime.sendMessage({type:'SAVE_QUICK_SETTINGS',patch:{interests:'Distributed systems, humane interfaces',weights:{relevance:45},threshold:63,minimumMargin:.55,behavior:'label'}})")
             assert quick['ok'], quick
             assert quick['data']['settings']['interests'] == 'Distributed systems, humane interfaces', quick
             assert quick['data']['settings']['weights']['relevance'] == 45, quick
             assert quick['data']['settings']['threshold'] == 63, quick
             assert quick['data']['settings']['minimumMargin'] == .55, quick
             assert quick['data']['settings']['behavior'] == 'label', quick
-            assert quick['data']['settings']['hideAds'] is True, quick
             assert quick['data']['settings']['enabled'] is False, quick
             assert FAKE_KEY not in json.dumps(quick), quick
             rejected_quick = content_evaluate(cdp, content_context,

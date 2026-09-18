@@ -7,7 +7,7 @@
     interests:'Software development, artificial intelligence, product design',
     weights:{relevance:85,substance:80,actionable:55,promotion:55,bait:80},
     threshold:58, highlightThreshold:78, minimumMargin:0.35, behavior:'dim',
-    dailyLimit:1000, searchEnabled:false, showBadges:true, hideAds:false, theme:'system'
+    dailyLimit:1000, searchEnabled:false, showBadges:true, theme:'system'
   };
   const PRESETS = {
     builder:{name:'Builder mode',interests:DEFAULTS.interests,weights:DEFAULTS.weights,threshold:58},
@@ -24,7 +24,7 @@
   }
   function settings(raw={}) {
     const d=structuredClone(DEFAULTS);
-    for(const k of ['enabled','searchEnabled','showBadges','hideAds']) if(typeof raw[k]==='boolean')d[k]=raw[k];
+    for(const k of ['enabled','searchEnabled','showBadges']) if(typeof raw[k]==='boolean')d[k]=raw[k];
     if(['dim','collapse','hide','label'].includes(raw.behavior))d.behavior=raw.behavior;
     if(['system','light','dark'].includes(raw.theme))d.theme=raw.theme;
     if(typeof raw.interests==='string')d.interests=raw.interests.slice(0,400).trim();

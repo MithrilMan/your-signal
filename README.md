@@ -2,7 +2,7 @@
 
 **A feed tuned to you.** Your Signal is an open-source Chrome extension that applies personal, reversible filters to the X timeline. You choose the interests, weights, threshold, and visual treatment. Jev evaluates the text; the extension makes every display decision on your device.
 
-[Source code](https://github.com/MithrilMan/your-signal) · [Privacy policy](PRIVACY.md) · [Security](SECURITY.md) · MIT licensed
+[Download releases](https://github.com/MithrilMan/your-signal/releases) · [Source code](https://github.com/MithrilMan/your-signal) · [Privacy policy](PRIVACY.md) · [Security](SECURITY.md) · MIT licensed
 
 ![Your Signal settings with personal filtering controls](store-assets/screenshots/your-signal-dashboard-1280x800.png)
 
@@ -14,7 +14,6 @@
 - Highlights, labels, dims, collapses, or hides posts according to your settings.
 - Keeps every change reversible, including a playful Peek interaction for collapsed posts.
 - Offers built-in and saved profiles directly in the X overlay and extension popup.
-- Can hide posts labeled as ads by X before any evaluation request.
 - Supports System, Light, and Dark appearance.
 - Stores preferences locally and includes no telemetry.
 
@@ -33,6 +32,12 @@ X page → extension service worker → TypeSafe Jev API
 You supply your own Jev API key. When filtering is enabled, the extension sends eligible post text and your interest topics directly to `https://api.typesafe.ai`. Your Signal does not operate an intermediary service, user registration, analytics, or payment flow.
 
 This is extension-only software, not offline AI. TypeSafe processes the text remotely under its own terms and privacy policy. Your API key is session-only by default; remembering it is an explicit opt-in and browser local storage is not an encrypted keychain.
+
+## Install a packaged release
+
+1. Download `your-signal-extension.zip` and `SHA256SUMS.txt` from the [latest release](https://github.com/MithrilMan/your-signal/releases/latest).
+2. Verify the checksum and extract the ZIP.
+3. Open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**, and select the extracted directory.
 
 ## Install from source
 
@@ -59,7 +64,7 @@ python tests/x_injection_smoke.py
 npm run build
 ```
 
-`npm run build` creates `release/extension/` and `release/your-signal-extension.zip`.
+`npm run build` creates `release/extension/` and `release/your-signal-extension.zip`. Branch CI uploads the ZIP as a workflow artifact; pushing a matching `v*` tag creates the GitHub release and checksum automatically.
 
 ## Repository layout
 

@@ -31,22 +31,6 @@
     if(!id)return null;
     return {id,text:text.slice(0,6000),has_link:blocks.some(n=>!!n.querySelector('a[href^="http"]')),has_media:!!article.querySelector('[data-testid="tweetPhoto"],[data-testid="videoPlayer"]'),truncated:text.length>6000||!!article.querySelector('[data-testid="tweet-text-show-more-link"]')};
   }
-  const AD_LABELS=new Set([
-    'ad','promoted','sponsored','sponsorizzato','pubblicità','anuncio','promocionado',
-    'publicidad','gesponsert','anzeige','sponsorisé','publicité','promovido','patrocinado',
-    '广告','廣告','広告','광고','프로모션'
-  ]);
-  function isAd(article) {
-    if(!(article instanceof HTMLElement)||!article.matches('article[data-testid="tweet"]'))return false;
-    for(const node of article.querySelectorAll('span,div')){
-      if(node.children.length||!AD_LABELS.has((node.textContent||'').trim().toLocaleLowerCase()))continue;
-      // A post may discuss ads, or even be authored by an account named "Ad".
-      // X's disclosure lives in tweet chrome, outside author/content/media nodes.
-      if(node.closest('[data-testid="tweetText"],[data-testid="User-Name"],[data-testid="card.wrapper"],[data-testid="tweetPhoto"],[data-testid="videoPlayer"]'))continue;
-      return true;
-    }
-    return false;
-  }
   function articles() {return [...document.querySelectorAll('main article[data-testid="tweet"]')];}
-  globalThis.OYA_X=Object.freeze({extract,isAd,articles});
+  globalThis.OYA_X=Object.freeze({extract,articles});
 })();

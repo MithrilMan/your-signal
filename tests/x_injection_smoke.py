@@ -30,7 +30,6 @@ article{padding:16px;border:1px solid #34343e;border-radius:5px;margin-bottom:12
 <main>
 <article data-testid="tweet" id="good"><div class="post"><div class="avatar">D</div><div><div class="meta"><b class="name">Demo account</b><span>· Software</span><a href="/demo/status/101"><time>2h</time></a></div><div class="copy" data-testid="tweetText">A reproducible caching benchmark: method, examples, and code for measuring p95 latency.</div></div><div class="media wide" data-testid="tweetPhoto"><small>Synthetic media fixture</small>Better tools.<br>Brighter tomorrow.</div><div class="actions"><button>Reply</button><button>Repost</button><button>Like</button><button>Share</button></div></div></article>
   <article data-testid="tweet" id="bad"><div class="post"><div class="avatar">D</div><div><div class="meta"><b class="name">Demo account</b><span>· Promotion</span><a href="/demo/status/102"><time>3h</time></a></div><div class="copy" data-testid="tweetText"><span>Comment AI, like this post,</span><br><span>and follow me for the secret list of tools <img alt="🤖" width="16" height="16" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%23baa8d1'/%3E%3C/svg%3E"> that will change everything!</span><div>New tools every day.</div></div></div><div class="actions"><button>Reply</button><button>Repost</button><button>Like</button><button>Share</button></div></div></article>
-  <div data-testid="cellInnerDiv" id="ad-cell"><article data-testid="tweet" id="ad"><div class="post"><div class="avatar">A</div><div><div class="meta"><span data-testid="User-Name"><b class="name">Demo sponsor</b></span><span>·</span><span class="ad-label">Ad</span><a href="/demo/status/199"><time>4h</time></a></div><div class="copy" data-testid="tweetText">Try this fictional sponsored product today.</div></div><div class="actions"><button>Reply</button><button>Repost</button><button>Like</button><button>Share</button></div></div></article></div>
   <article data-testid="tweet" class="image-only" id="media"><div class="post"><div class="avatar">D</div><div><div class="meta"><b class="name">Demo account</b><span>· Image only</span><a href="/demo/status/103"><time>5h</time></a></div><div class="media landscape" data-testid="tweetPhoto"><small>Synthetic media fixture</small>Image not analyzed<br><small>Post unchanged</small></div></div><div class="actions"><button>Reply</button><button>Repost</button><button>Like</button><button>Share</button></div></div></article>
 <p class="safety">Scores reflect your preferences, not the truth of a post.</p>
 </main></body></html>'''
@@ -45,7 +44,7 @@ RUNTIME = '''
   globalThis.fixturePositionSaves=[];globalThis.controlShadow=()=>fixtureShadows.get(document.querySelector('#oya-control'));
   globalThis.fixtureSavedProfiles=[{id:'11111111-1111-4111-8111-111111111111',name:'Evening reading',settings:{...OYA.profileSettings(OYA.DEFAULTS),threshold:64,behavior:'label'}}];
   globalThis.fixtureQuickProfiles=fixtureSavedProfiles.map(({id,name})=>({id,name}));
-  globalThis.fixtureSettings={...OYA.DEFAULTS,enabled:true,behavior:'collapse',hideAds:true};
+  globalThis.fixtureSettings={...OYA.DEFAULTS,enabled:true,behavior:'collapse'};
   globalThis.fixtureState=()=>({settings:fixtureSettings,quickProfiles:fixtureQuickProfiles,activeProfile:OYA.profileSelection(fixtureSettings,fixtureSavedProfiles),overlayPosition:fixturePosition,evaluationRevision:'fixture'});
   globalThis.updateSettings=patch=>{fixtureSettings={...fixtureSettings,...patch};chrome.runtime.onMessage.listener({type:'OYA_SETTINGS',...fixtureState()});};
   globalThis.chrome={runtime:{getURL:path=>'https://fixture.yoursignal.invalid/'+path,onMessage:{addListener(fn){this.listener=fn;}},async sendMessage(message){
@@ -113,10 +112,8 @@ with sync_playwright() as playwright:
     inject()
     page.wait_for_selector('#good.oya-highlight')
     page.wait_for_selector('#bad.oya-collapse')
-    page.wait_for_selector('#ad-cell.oya-ad-hide-cell', state='attached')
     page.evaluate('document.fonts.ready')
     assert page.evaluate('fixtureCount') == 2
-    assert page.locator('#ad-cell').bounding_box() is None
     assert page.locator('#media').inner_html() == media_before
     assert page.locator('#media').get_attribute('class') == 'image-only'
     assert page.locator('#good [data-oya-host]').bounding_box()['width'] == 32
@@ -141,13 +138,6 @@ with sync_playwright() as playwright:
     }""")
     assert extraction['visible']['text'] == 'Comment AI\n\nKeep  both spaces.\nA separate block.\nEmoji: 🤖 end.'
     assert all(value == extraction['visible'] for value in extraction.values())
-    ad_detection = page.evaluate("""()=>{
-      const good=document.querySelector('#good'),author=document.querySelector('#ad').cloneNode(true);
-      author.id='author-ad';author.querySelector('.ad-label').remove();author.querySelector('[data-testid=User-Name]').textContent='Ad';author.querySelector('[data-testid=tweetText]').textContent='Ad';
-      good.insertAdjacentHTML('beforeend','<div data-testid="placementTracking"></div>');
-      return {promoted:OYA_X.isAd(document.querySelector('#ad')),placementOnly:OYA_X.isAd(good),authorOrCopy:OYA_X.isAd(author)};
-    }""")
-    assert ad_detection == {'promoted': True, 'placementOnly': False, 'authorOrCopy': False}
     assert page.locator('#oya-control').bounding_box()['x'] == 16
     assert page.locator('#oya-control').bounding_box()['y'] == 16
     page.screenshot(path=str(OUT / 'x-injection.png'))
@@ -159,7 +149,6 @@ with sync_playwright() as playwright:
     page.wait_for_function("controlShadow().querySelector('.quick-menu').matches(':popover-open')")
     assert page.evaluate("controlShadow().querySelector('.main').getAttribute('aria-expanded')") == 'true'
     assert page.evaluate("controlShadow().querySelector('.quick-toggle').getAttribute('aria-checked')") == 'true'
-    assert page.evaluate("controlShadow().querySelector('.ad-toggle').getAttribute('aria-checked')") == 'true'
     assert page.evaluate("controlShadow().querySelector('[aria-label=\"Apply a profile\"]').textContent.includes('Evening reading')")
     assert page.evaluate("controlShadow().querySelector('[aria-label=\"Apply a profile\"]').value") == 'preset:builder'
     assert page.evaluate("controlShadow().querySelector('[aria-label=Appearance]').value") == 'system'
@@ -179,16 +168,6 @@ with sync_playwright() as playwright:
     assert page.evaluate('fixtureCount') == quick_count
     page.evaluate("controlShadow().querySelector('[aria-label=\"Uncertainty guard\"]').value='35';controlShadow().querySelector('[aria-label=\"Uncertainty guard\"]').dispatchEvent(new Event('change'))")
     page.wait_for_function("fixtureSettings.minimumMargin===.35")
-    page.evaluate("controlShadow().querySelector('.ad-toggle').click()")
-    page.wait_for_function("fixtureSettings.hideAds===false")
-    assert page.locator('#ad-cell').is_visible()
-    page.evaluate("controlShadow().querySelector('.ad-toggle').click()")
-    page.wait_for_function("fixtureSettings.hideAds===true")
-    page.wait_for_selector('#ad-cell.oya-ad-hide-cell', state='attached')
-    page.wait_for_timeout(250)
-    after_ad_toggle = page.evaluate('fixtureCount')
-    assert after_ad_toggle in (quick_count, quick_count + 1)
-    quick_count = after_ad_toggle
     page.evaluate("()=>{const details=controlShadow().querySelector('.tune-details');details.open=true;const target=controlShadow().querySelector('textarea');target.value='Distributed systems, humane interfaces';target.dispatchEvent(new Event('input',{bubbles:true}));target.dispatchEvent(new Event('change',{bubbles:true}));}")
     page.wait_for_function("fixtureSettings.interests==='Distributed systems, humane interfaces'")
     assert page.evaluate("controlShadow().querySelector('.field-note span:last-child').textContent") == '38 / 400'

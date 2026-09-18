@@ -20,7 +20,6 @@ Features:
 - reversible post treatments and Peek for collapsed posts;
 - built-in and saved profiles;
 - optional Search support;
-- optional local ad hiding based on X labels;
 - System, Light, and Dark themes;
 - no telemetry or remote code;
 - open-source MIT code.

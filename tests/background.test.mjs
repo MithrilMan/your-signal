@@ -56,8 +56,8 @@ test('background trust, key handling, cache, concurrency and budget',async t=>{
   });
   await t.test('X quick controls change only daily feed settings and validate resume in the worker',async()=>{
     await configure();calls=[];const key=stores.local.jevKey,before=(await send({type:'GET_PUBLIC'},content)).data;
-    const changed=await send({type:'SAVE_QUICK_SETTINGS',patch:{interests:'Distributed systems, humane interfaces',weights:{relevance:45,bait:60},threshold:71,minimumMargin:.55,behavior:'hide',hideAds:true,theme:'dark'}},content);
-    assert.equal(changed.ok,true,changed.error);assert.equal(changed.data.settings.threshold,71);assert.equal(changed.data.settings.minimumMargin,.55);assert.equal(changed.data.settings.behavior,'hide');assert.equal(changed.data.settings.hideAds,true);assert.equal(changed.data.settings.theme,'dark');assert.equal(changed.data.activeProfile,'');
+    const changed=await send({type:'SAVE_QUICK_SETTINGS',patch:{interests:'Distributed systems, humane interfaces',weights:{relevance:45,bait:60},threshold:71,minimumMargin:.55,behavior:'hide',theme:'dark'}},content);
+    assert.equal(changed.ok,true,changed.error);assert.equal(changed.data.settings.threshold,71);assert.equal(changed.data.settings.minimumMargin,.55);assert.equal(changed.data.settings.behavior,'hide');assert.equal(changed.data.settings.theme,'dark');assert.equal(changed.data.activeProfile,'');
     assert.equal(changed.data.settings.interests,'Distributed systems, humane interfaces');assert.equal(changed.data.settings.weights.relevance,45);assert.equal(changed.data.settings.weights.bait,60);assert.equal(changed.data.settings.weights.substance,before.settings.weights.substance);
     assert.equal(stores.local.jevKey,key);assert.equal(calls.length,0);
     assert.ok(!JSON.stringify(changed).includes(key));
@@ -72,7 +72,6 @@ test('background trust, key handling, cache, concurrency and budget',async t=>{
       {type:'SAVE_QUICK_SETTINGS',patch:{},profile:'preset:builder'},
       {type:'SAVE_QUICK_SETTINGS',patch:{}},
       {type:'SAVE_QUICK_SETTINGS',patch:{enabled:'yes'}},
-      {type:'SAVE_QUICK_SETTINGS',patch:{hideAds:'yes'}},
       {type:'SAVE_QUICK_SETTINGS',patch:{theme:'midnight'}},
       {type:'SAVE_QUICK_SETTINGS',patch:{interests:42}},
       {type:'SAVE_QUICK_SETTINGS',patch:{interests:'x'.repeat(401)}},

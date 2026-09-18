@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Your Signal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Personal, reversible filters for your X timeline, powered by your own Jev API key.",
   "homepage_url": "https://github.com/MithrilMan/your-signal",
   "incognito": "not_allowed",

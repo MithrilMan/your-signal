@@ -1,16 +1,19 @@
 name: Verify source
-on: [push, pull_request]
+on:
+  push:
+    branches: ['**']
+  pull_request:
 permissions:
   contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: npm test
@@ -18,3 +21,9 @@ jobs:
       - run: python -m pytest -q eval/tests
       - run: python eval/run.py eval/examples.jsonl
       - run: python scripts/build.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: your-signal-extension-${{ github.sha }}
+          path: release/your-signal-extension.zip
+          if-no-files-found: error
+          retention-days: 14

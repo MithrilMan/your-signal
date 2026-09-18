@@ -34,7 +34,7 @@ function collect(){
   return C.settings({...state.settings,interests:$('interests').value,
     weights:Object.fromEntries(C.KEYS.map(k=>[k,Number($('weight-'+k).value)])),
     threshold:Number($('threshold').value),behavior:document.querySelector('[name=behavior]:checked').value,
-    searchEnabled:$('search-enabled').checked,showBadges:$('show-badges').checked,hideAds:$('hide-ads').checked,
+    searchEnabled:$('search-enabled').checked,showBadges:$('show-badges').checked,
     dailyLimit:Number($('daily-limit').value),minimumMargin:Number($('minimum-margin').value),theme:$('theme').value});
 }
 function showEnabled(){
@@ -46,7 +46,7 @@ function fill(){
   $('theme').value=s.theme;applyTheme(s.theme);
   $('interests').value=s.interests;$('threshold').value=s.threshold;$('daily-limit').value=s.dailyLimit;$('minimum-margin').value=s.minimumMargin;
   $('remember-key').checked=state.rememberKey===true;
-  $('search-enabled').checked=s.searchEnabled;$('show-badges').checked=s.showBadges;$('hide-ads').checked=s.hideAds;
+  $('search-enabled').checked=s.searchEnabled;$('show-badges').checked=s.showBadges;
   document.querySelector(`[name=behavior][value=${s.behavior}]`).checked=true;
   for(const k of C.KEYS)$('weight-'+k).value=s.weights[k];
   $('model-label').textContent=state.model+' · pinned version';
@@ -134,7 +134,7 @@ document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{const prese
 $('saved-profile').addEventListener('change',()=>{const profile=state.customProfiles?.find(p=>p.id===$('saved-profile').value);if(profile){state.settings=C.settings({...state.settings,...profile.settings});sampleRevealed.clear();fill();queueSave();}});
 bind('delete-profile',async()=>{const id=$('saved-profile').value;if(!id)return;const result=await send('UI_DELETE_PROFILE',{id});state.customProfiles=result.customProfiles;fill();toast('Profile deleted. Your current feed settings are unchanged.');});
 for(const id of ['interests','threshold','daily-limit','minimum-margin'])$(id).addEventListener('input',queueSave);
-for(const id of ['search-enabled','show-badges','hide-ads'])$(id).addEventListener('change',queueSave);
+for(const id of ['search-enabled','show-badges'])$(id).addEventListener('change',queueSave);
 $('theme').addEventListener('change',()=>{state.settings.theme=$('theme').value;applyTheme();queueSave();});
 document.querySelectorAll('[name=behavior]').forEach(x=>x.addEventListener('change',queueSave));
 bind('enabled-toggle',async()=>{

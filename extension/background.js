@@ -162,10 +162,9 @@ async function saveQuickSettings(message){
   if(hasPatch){
     const patch=message.patch;
     if(!patch||typeof patch!=='object'||Array.isArray(patch))throw new Error('Invalid quick settings.');
-    const keys=Object.keys(patch),allowed=new Set(['enabled','interests','weights','threshold','minimumMargin','behavior','hideAds','theme']);
+    const keys=Object.keys(patch),allowed=new Set(['enabled','interests','weights','threshold','minimumMargin','behavior','theme']);
     if(!keys.length||keys.some(key=>!allowed.has(key)))throw new Error('Invalid quick settings.');
     if(Object.hasOwn(patch,'enabled')&&typeof patch.enabled!=='boolean')throw new Error('Invalid filter state.');
-    if(Object.hasOwn(patch,'hideAds')&&typeof patch.hideAds!=='boolean')throw new Error('Invalid ad setting.');
     if(Object.hasOwn(patch,'theme')&&!['system','light','dark'].includes(patch.theme))throw new Error('Invalid appearance setting.');
     if(Object.hasOwn(patch,'interests')&&(typeof patch.interests!=='string'||patch.interests.length>400))throw new Error('Invalid target interests.');
     if(Object.hasOwn(patch,'weights')){

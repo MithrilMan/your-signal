@@ -1,7 +1,7 @@
 (() => {
   const C=globalThis.OYA,A=globalThis.OYA_X;
   let state,quickProfiles=[],activeQuickProfile='',revision='',generation=0,route='',timer,active=0,lastError='';
-  const records=new Map(),queue=new Set(),revealedPosts=new Map(),hiddenContainers=new WeakMap(),adContainers=new Map(),adsByContainer=new WeakMap();
+  const records=new Map(),queue=new Set(),revealedPosts=new Map(),hiddenContainers=new WeakMap();
   const MAX_RECORDS=350,MAX_REVEALS=350;
   const asset=path=>chrome.runtime.getURL?.(path)||'';
   const systemThemeQuery=matchMedia('(prefers-color-scheme: dark)');
@@ -83,7 +83,7 @@
     :host([data-dragging]) .main,:host([data-dragging]) .position{cursor:grabbing}:host([data-position-error]) .position{color:#efbd64;border-left-color:#c39952}
     .quick-menu,.position-menu{position:fixed;inset:auto;margin:0;width:300px;max-width:calc(100vw - 24px);max-height:calc(100vh - 24px);overflow:auto;padding:20px;border:1px solid #d4ccbf;border-radius:12px;background:#f8f2e8 url("${paperUrl}") center/480px;color:#302c3e;box-shadow:0 12px 36px #09071140;font:14px/1.45 ${uiFont}}
     .quick-menu::backdrop,.position-menu::backdrop{background:transparent}.quick-menu h2,.position-menu h2{font-size:16px;margin:0 24px 7px 0}.position-menu p{margin:0 0 14px;color:#655b6b;font-size:12px}.corners{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .quick-menu{width:340px}.quick-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.quick-head h2{margin:0}.quick-toggle{min-height:34px;padding:7px 12px;border:1px solid #b78b82;border-radius:18px;background:#f4c8b9;color:#493840;font-weight:650}.quick-toggle[aria-checked=true]{border-color:#829376;background:#d9e2ce}.quick-field{display:grid;gap:7px;margin-top:14px}.quick-field>span{font-size:12px;font-weight:650}.quick-field select,.quick-field textarea{width:100%;padding:8px 10px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#342d3b;font:13px/1.4 ${uiFont}}.quick-field select{min-height:40px}.quick-field textarea{min-height:66px;resize:vertical}.field-note{display:flex;justify-content:space-between;gap:12px;color:#716977;font-size:10px}.tune-details{margin-top:14px;border:1px solid #d4cabd;border-radius:8px;background:#ffffff70}.tune-details>summary{cursor:pointer;padding:10px 12px;font-size:12px;font-weight:650}.tune-body{padding:0 12px 12px}.tune-body .quick-field{margin-top:8px}.quick-weights{display:grid;gap:8px;margin-top:12px}.quick-weight{display:grid;grid-template-columns:78px 1fr 32px;align-items:center;gap:8px;font-size:11px}.quick-weight input{width:100%;accent-color:#766081}.quick-weight output{text-align:right;font-weight:650;font-variant-numeric:tabular-nums}.threshold-line{display:grid;grid-template-columns:1fr 42px;gap:10px;align-items:center}.threshold-line input{width:100%;accent-color:#766081}.threshold-line output{text-align:center;font-weight:700;font-variant-numeric:tabular-nums}.behavior-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.behavior-grid button{min-height:37px;padding:7px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#403546}.behavior-grid button[aria-pressed=true]{border-color:#766081;background:#e9dfeb;font-weight:650}.ad-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:42px;margin-top:14px;padding:8px 11px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#403546;font-weight:650}.ad-toggle::after{content:"Off";min-width:38px;padding:3px 7px;border-radius:12px;background:#eee5d8;color:#655b6b;font-size:10px}.ad-toggle[aria-checked=true]{border-color:#829376;background:#eef3e8}.ad-toggle[aria-checked=true]::after{content:"On";background:#cfddc5;color:#3d5635}.quick-actions{display:flex;gap:8px;margin-top:16px}.quick-actions button{min-height:39px;padding:8px 11px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#403546;font-weight:600}.quick-actions .advanced{flex:1}.quick-status{min-height:17px;margin:10px 0 0;color:#655b6b;font-size:11px}.quick-status.error{color:#9b493e}
+    .quick-menu{width:340px}.quick-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.quick-head h2{margin:0}.quick-toggle{min-height:34px;padding:7px 12px;border:1px solid #b78b82;border-radius:18px;background:#f4c8b9;color:#493840;font-weight:650}.quick-toggle[aria-checked=true]{border-color:#829376;background:#d9e2ce}.quick-field{display:grid;gap:7px;margin-top:14px}.quick-field>span{font-size:12px;font-weight:650}.quick-field select,.quick-field textarea{width:100%;padding:8px 10px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#342d3b;font:13px/1.4 ${uiFont}}.quick-field select{min-height:40px}.quick-field textarea{min-height:66px;resize:vertical}.field-note{display:flex;justify-content:space-between;gap:12px;color:#716977;font-size:10px}.tune-details{margin-top:14px;border:1px solid #d4cabd;border-radius:8px;background:#ffffff70}.tune-details>summary{cursor:pointer;padding:10px 12px;font-size:12px;font-weight:650}.tune-body{padding:0 12px 12px}.tune-body .quick-field{margin-top:8px}.quick-weights{display:grid;gap:8px;margin-top:12px}.quick-weight{display:grid;grid-template-columns:78px 1fr 32px;align-items:center;gap:8px;font-size:11px}.quick-weight input{width:100%;accent-color:#766081}.quick-weight output{text-align:right;font-weight:650;font-variant-numeric:tabular-nums}.threshold-line{display:grid;grid-template-columns:1fr 42px;gap:10px;align-items:center}.threshold-line input{width:100%;accent-color:#766081}.threshold-line output{text-align:center;font-weight:700;font-variant-numeric:tabular-nums}.behavior-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.behavior-grid button{min-height:37px;padding:7px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#403546}.behavior-grid button[aria-pressed=true]{border-color:#766081;background:#e9dfeb;font-weight:650}.quick-actions{display:flex;gap:8px;margin-top:16px}.quick-actions button{min-height:39px;padding:8px 11px;border:1px solid #c9bdb3;border-radius:7px;background:#fffcf6;color:#403546;font-weight:600}.quick-actions .advanced{flex:1}.quick-status{min-height:17px;margin:10px 0 0;color:#655b6b;font-size:11px}.quick-status.error{color:#9b493e}
     .corner,.reset{min-height:42px;border:1px solid #d4cabd;border-radius:7px;background:#fffcf6;color:#403546;padding:9px 10px;text-align:left}.corner{display:flex;gap:8px;align-items:center}.corner[aria-pressed=true]{border-color:#84718e;background:#e9dfeb}.corner:hover,.reset:hover{background:#eee5d8}
     .corner-icon{position:relative;width:20px;height:16px;flex:none;border:1px solid #96889c;border-radius:2px}.corner-icon::after{content:"";position:absolute;top:2px;left:2px;width:6px;height:4px;background:#67536f;border-radius:1px}.top-right .corner-icon::after,.bottom-right .corner-icon::after{left:auto;right:2px}.bottom-left .corner-icon::after,.bottom-right .corner-icon::after{top:auto;bottom:2px}
     .reset,.show-hidden{display:block;width:100%;margin-top:10px;text-align:center}.show-hidden{min-height:42px;margin:0 0 18px;border:1px solid #ac94af;border-radius:7px;background:#e8dce9;color:#403546;font-weight:600}.show-hidden[hidden]{display:none}.position-menu .keys{font-size:11px;margin-top:14px;line-height:1.6}.position-menu .save-status{margin-bottom:0;font-size:11px;min-height:16px}.close{position:absolute;right:9px;top:9px;width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:#655b6b;font-size:23px;padding:0}.close:hover{background:#ded4c5}
@@ -95,12 +95,11 @@
     :host([data-theme=dark]) .tune-details{border-color:#5d5662;background:#ffffff08}
     :host([data-theme=dark]) .quick-toggle{border-color:#8e6d66;background:#6a4642;color:#fff0eb}
     :host([data-theme=dark]) .quick-toggle[aria-checked=true]{border-color:#74856d;background:#3d523c;color:#eef7ea}
-    :host([data-theme=dark]) .behavior-grid button,:host([data-theme=dark]) .ad-toggle,:host([data-theme=dark]) .quick-actions button,:host([data-theme=dark]) .corner,:host([data-theme=dark]) .reset{border-color:#635b68;background:#343039;color:#f3edf5}
+    :host([data-theme=dark]) .behavior-grid button,:host([data-theme=dark]) .quick-actions button,:host([data-theme=dark]) .corner,:host([data-theme=dark]) .reset{border-color:#635b68;background:#343039;color:#f3edf5}
     :host([data-theme=dark]) .behavior-grid button[aria-pressed=true],:host([data-theme=dark]) .corner[aria-pressed=true]{border-color:#a38caf;background:#51445a}
-    :host([data-theme=dark]) .ad-toggle[aria-checked=true]{border-color:#74856d;background:#354534}
     :host([data-theme=dark]) .show-hidden{border-color:#917c99;background:#4c3f53;color:#f3edf5}
     :host([data-theme=dark]) .close{color:#d5cbd9}:host([data-theme=dark]) .close:hover{background:#ffffff12}
-    @media(forced-colors:active){.control,.quick-menu,.position-menu,.corner,.reset,.quick-toggle,.ad-toggle,.behavior-grid button,.quick-actions button,.tune-details{border-color:CanvasText}.grip{background:ButtonText}.corner[aria-pressed=true],.behavior-grid button[aria-pressed=true],.ad-toggle[aria-checked=true]{outline:2px solid Highlight}}
+    @media(forced-colors:active){.control,.quick-menu,.position-menu,.corner,.reset,.quick-toggle,.behavior-grid button,.quick-actions button,.tune-details{border-color:CanvasText}.grip{background:ButtonText}.corner[aria-pressed=true],.behavior-grid button[aria-pressed=true]{outline:2px solid Highlight}}
   `;
   const control=el('div','','control'),chipButton=el('button','','main'),positionButton=el('button','','position');
   chipButton.type='button';
@@ -122,11 +121,10 @@
   const behaviorField=el('div','','quick-field'),behaviorLabel=el('span','Posts below threshold'),behaviorGrid=el('div','','behavior-grid');behaviorGrid.setAttribute('role','group');behaviorGrid.setAttribute('aria-label','Post treatment');
   for(const [value,label] of [['dim','Dim'],['collapse','Collapse'],['hide','Hide'],['label','Label only']]){const button=el('button',label);button.type='button';button.dataset.behavior=value;button.setAttribute('aria-pressed','false');behaviorGrid.append(button);}
   behaviorField.append(behaviorLabel,behaviorGrid);
-  const quickAdToggle=el('button','Hide X ads','ad-toggle');quickAdToggle.type='button';quickAdToggle.setAttribute('role','switch');quickAdToggle.setAttribute('aria-checked','false');
   const quickShowHidden=el('button','','show-hidden');quickShowHidden.type='button';quickShowHidden.hidden=true;
   const quickActions=el('div','','quick-actions'),advancedSettings=el('button','Connection & privacy','advanced'),quickClose=el('button','Close');advancedSettings.type=quickClose.type='button';quickActions.append(advancedSettings,quickClose);
   const quickStatus=el('p','Changes apply to this feed immediately.','quick-status');quickStatus.setAttribute('role','status');
-  quickMenu.append(quickHead,profileField,themeField,tuneDetails,thresholdField,behaviorField,quickAdToggle,quickShowHidden,quickActions,quickStatus);
+  quickMenu.append(quickHead,profileField,themeField,tuneDetails,thresholdField,behaviorField,quickShowHidden,quickActions,quickStatus);
   const positionMenu=el('div','','position-menu');positionMenu.id='signal-position';positionMenu.popover='auto';positionMenu.setAttribute('role','group');positionMenu.setAttribute('aria-labelledby','position-heading');
   const positionHeading=el('h2','Control position');positionHeading.id='position-heading';
   const positionClose=el('button','×','close');positionClose.type='button';positionClose.setAttribute('aria-label','Close control position');
@@ -208,7 +206,6 @@
     marginInput.value=String(Math.round(state.minimumMargin*100));marginOutput.value=marginInput.value;marginOutput.textContent=marginInput.value;
     thresholdInput.value=String(state.threshold);thresholdOutput.value=String(Math.round(state.threshold));thresholdOutput.textContent=String(Math.round(state.threshold));
     for(const button of behaviorGrid.children)button.setAttribute('aria-pressed',String(button.dataset.behavior===state.behavior));
-    quickAdToggle.setAttribute('aria-checked',String(state.hideAds));
     themeSelect.value=state.theme;
     const profileSignature=JSON.stringify(quickProfiles);
     if(profileSelect.dataset.signature!==profileSignature){
@@ -221,7 +218,7 @@
     }
     profileSelect.value=[...profileSelect.options].some(item=>item.value===activeQuickProfile)?activeQuickProfile:'';
   }
-  function quickBusy(busy){for(const element of [quickToggle,profileSelect,themeSelect,quickInterests,...C.KEYS.map(key=>weightInputs[key].input),marginInput,thresholdInput,...behaviorGrid.children,quickAdToggle])element.disabled=busy;}
+  function quickBusy(busy){for(const element of [quickToggle,profileSelect,themeSelect,quickInterests,...C.KEYS.map(key=>weightInputs[key].input),marginInput,thresholdInput,...behaviorGrid.children])element.disabled=busy;}
   function saveQuick(extra,success){
     const current=++quickSaveRevision,focusTarget=chipShadow.activeElement;quickBusy(true);quickStatus.classList.remove('error');quickStatus.textContent='Saving…';
     quickSaveQueue=quickSaveQueue.catch(()=>{}).then(()=>send('SAVE_QUICK_SETTINGS',extra)).then(next=>{
@@ -244,7 +241,6 @@
   thresholdInput.addEventListener('input',()=>{thresholdOutput.value=thresholdInput.value;thresholdOutput.textContent=thresholdInput.value;});
   thresholdInput.addEventListener('change',()=>saveQuick({patch:{threshold:Number(thresholdInput.value)}},'Threshold updated.'));
   for(const button of behaviorGrid.children)button.addEventListener('click',()=>saveQuick({patch:{behavior:button.dataset.behavior}},`${button.textContent} treatment active.`));
-  quickAdToggle.addEventListener('click',()=>saveQuick({patch:{hideAds:!state.hideAds}},state.hideAds?'X ads are visible.':'X ads are hidden locally.'));
   advancedSettings.addEventListener('click',()=>{quickMenu.hidePopover();send('OPEN_OPTIONS',{panel:'connection'}).catch(error=>{quickStatus.textContent=error.message;quickStatus.classList.add('error');});});
   quickClose.addEventListener('click',()=>{quickMenu.hidePopover();chipButton.focus({preventScroll:true});});
   tuneDetails.addEventListener('toggle',()=>placeMenu(quickMenu));
@@ -316,20 +312,6 @@
       if(!node.parentElement||[...node.parentElement.children].some(child=>child!==node))return null;
     }
     return cell;
-  }
-  function clearAd(article){
-    article.classList.remove('oya-ad-hide');
-    const cell=adContainers.get(article)||hideContainer(article);
-    if(cell){cell.classList.remove('oya-ad-hide-cell');adsByContainer.delete(cell);}
-    adContainers.delete(article);
-  }
-  function hideAd(article){
-    const current=adContainers.get(article);
-    article.classList.add('oya-ad-hide');
-    const cell=hideContainer(article);
-    if(current&&current!==cell){current.classList.remove('oya-ad-hide-cell');adsByContainer.delete(current);}
-    if(cell){cell.classList.add('oya-ad-hide-cell');adContainers.set(article,cell);adsByContainer.set(cell,article);}
-    else adContainers.set(article,null);
   }
   function rememberReveal(record){
     // Keep an explicit choice across X virtualizing a post, but never carry it to edited text.
@@ -544,8 +526,7 @@
     chip.hidden=!allowed;
     if(!allowed){if(quickMenu.matches(':popover-open'))quickMenu.hidePopover();if(positionMenu.matches(':popover-open'))positionMenu.hidePopover();}
     const hiddenCount=[...records].filter(([article])=>article.isConnected&&article.classList.contains('oya-hide')).length;
-    const adCount=[...adContainers].filter(([article])=>article.isConnected&&article.classList.contains('oya-ad-hide')).length;
-    const text=lastError?'Check connection':!state?.enabled?'Paused':active?'Reading text…':hiddenCount?`${hiddenCount} hidden`:adCount?`${adCount} ads hidden`:'Filter on';
+    const text=lastError?'Check connection':!state?.enabled?'Paused':active?'Reading text…':hiddenCount?`${hiddenCount} hidden`:'Filter on';
     const logo=el('img');logo.src=markUrl;logo.alt='';
     chipButton.className=`main${lastError?' error':!state?.enabled?' paused':''}`;
     chipButton.replaceChildren(logo,el('span','YOUR SIGNAL','brand'),el('span','·'),el('span',text,'status'),el('span','','dot'));
@@ -558,17 +539,10 @@
   function scan(){
     if(!state)return;
     const newRoute=location.pathname;
-    if(newRoute!==route){route=newRoute;generation++;queue.clear();for(const [a,r] of records)clearVisual(a,r);for(const article of [...adContainers.keys()])clearAd(article);}
+    if(newRoute!==route){route=newRoute;generation++;queue.clear();for(const [a,r] of records)clearVisual(a,r);}
     for(const [a,r] of records)if(!a.isConnected){clearVisual(a,r);observer.unobserve(a);records.delete(a);queue.delete(a);}
-    for(const article of [...adContainers.keys()])if(!article.isConnected)clearAd(article);
-    if(!C.routeAllowed(route,state)){for(const article of [...adContainers.keys()])clearAd(article);updateChip();return;}
+    if(!C.routeAllowed(route,state)){updateChip();return;}
     for(const article of A.articles()){
-      if(state.enabled&&state.hideAds&&A.isAd(article)){
-        const prior=records.get(article);
-        if(prior){clearVisual(article,prior);observer.unobserve(article);records.delete(article);queue.delete(article);}
-        hideAd(article);continue;
-      }
-      clearAd(article);
       const post=A.extract(article);
       if(!post){const prior=records.get(article);if(prior){clearVisual(article,prior);observer.unobserve(article);records.delete(article);}continue;}
       const sig=JSON.stringify(post);let record=records.get(article);
@@ -603,8 +577,6 @@
       // React may replace the article's class attribute while retaining the post.
       // Restore its treatment in this microtask, before a collapsed post can paint.
       for(const mutation of mutations)if(mutation.type==='attributes'){
-        const adArticle=adsByContainer.get(mutation.target)||(adContainers.has(mutation.target)?mutation.target:null);
-        if(adArticle&&state?.enabled&&state?.hideAds&&A.isAd(adArticle)&&( !adArticle.classList.contains('oya-ad-hide') || (adContainers.get(adArticle)&&!adContainers.get(adArticle).classList.contains('oya-ad-hide-cell')) ))hideAd(adArticle);
         const owner=hiddenContainers.get(mutation.target),article=owner?.article||mutation.target,record=owner?.record||records.get(article);
         if(treatmentChanged(article,record)&&!restoreTreatment(article,record))render(article,record);
       }
