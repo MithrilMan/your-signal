@@ -1,0 +1,76 @@
+{
+  "manifest_version": 3,
+  "name": "Your Signal",
+  "version": "0.2.0",
+  "description": "Personal, reversible filters for your X timeline, powered by your own Jev API key.",
+  "homepage_url": "https://github.com/MithrilMan/your-signal",
+  "incognito": "not_allowed",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://x.com/*",
+    "https://www.x.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://api.typesafe.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Your Signal \u2014 A feed tuned to you",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "128": "icons/128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*",
+        "https://www.x.com/*"
+      ],
+      "js": [
+        "core.js",
+        "adapters/x.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-src 'none'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/signal-mark.svg",
+        "assets/paper-grain-surface-768x768.webp",
+        "assets/fonts/instrument-sans-latin.woff2"
+      ],
+      "matches": [
+        "https://x.com/*",
+        "https://www.x.com/*"
+      ]
+    }
+  ]
+}

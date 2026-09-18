@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>Your Signal — Quick controls</title><link rel="stylesheet" href="ui.css"><link rel="stylesheet" href="popup.css"></head>
+<body class="popup-body">
+<header class="popup-header"><div class="popup-brand"><img src="assets/signal-mark.svg" width="45" height="40" alt=""><div class="brand-lockup"><span class="brand-word">YOUR <b>SIGNAL</b></span><span class="brand-tagline">A feed tuned to you.</span></div></div><label class="popup-theme" for="popup-theme"><span>Theme</span><select id="popup-theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></header>
+<main class="popup-main">
+  <div class="popup-intro"><h1>Your feed,<br>more like <em>you.</em></h1><p class="handwritten" aria-hidden="true">Same interests.<br>A kinder internet.<span>♡</span></p><img src="assets/pressed-leaf-compact-240x360.webp" alt=""></div>
+  <button id="popup-toggle" class="popup-toggle" role="switch" aria-checked="false"><span class="pause-glyph" aria-hidden="true">Ⅱ</span><span id="popup-status">Filter paused</span><span class="toggle-track" aria-hidden="true"><span></span></span><span class="toggle-word" aria-hidden="true">OFF</span></button>
+  <div class="popup-profile-row"><label for="popup-preset" class="sr-only">Your profile</label><select id="popup-preset"><option value="custom">Custom settings</option><optgroup label="Starting points"><option value="builder">Builder mode</option><option value="curious">Curiosity</option><option value="focus">Deep focus</option></optgroup></select><button id="popup-new-profile" class="profile-save-button" aria-expanded="false" aria-controls="popup-profile-form">Save profile <span aria-hidden="true">＋</span></button></div>
+  <form id="popup-profile-form" class="popup-profile-form" hidden><label for="popup-profile-name" class="sr-only">Profile name</label><input id="popup-profile-name" name="name" maxlength="40" required placeholder="Name your profile" autocomplete="off"><button type="submit" class="profile-confirm">Save</button><button id="popup-cancel-profile" type="button" aria-label="Cancel saving profile">×</button></form>
+  <div class="popup-target"><label for="popup-interests">YOUR TARGET <span>Topics you want more of</span></label><textarea id="popup-interests" rows="2" maxlength="400" placeholder="Software, science, thoughtful design…"></textarea></div>
+  <div class="popup-weights" id="popup-weights" role="group" aria-label="Your five preference filters"></div>
+  <div class="popup-threshold"><label for="popup-threshold">Feed threshold</label><input id="popup-threshold" type="range" min="0" max="100"><output id="popup-threshold-value" for="popup-threshold">58</output></div>
+  <fieldset class="popup-behavior"><legend>BELOW YOUR THRESHOLD</legend><div class="behavior-options"><label><input type="radio" name="popup-behavior" value="dim" checked><span>Dim</span></label><label><input type="radio" name="popup-behavior" value="collapse"><span>Collapse</span></label><label><input type="radio" name="popup-behavior" value="hide"><span>Hide</span></label><label><input type="radio" name="popup-behavior" value="label"><span>Label only</span></label></div></fieldset>
+  <div class="popup-footnote"><span>Always reversible.</span><span id="popup-save-state" role="status" aria-live="polite">Saved on this device</span></div>
+  <div class="popup-stats"><span><b id="popup-evaluated">0</b> evaluations today</span><span><b id="popup-cache">0</b> cache hits</span></div>
+  <p class="popup-message" id="popup-message" role="status" hidden></p>
+  <button id="popup-open" class="primary-button">Open your space <span aria-hidden="true">→</span></button>
+</main>
+<footer class="popup-footer"><span id="popup-mode">Personal key · Jev</span><a href="https://github.com/MithrilMan/your-signal" target="_blank" rel="noopener noreferrer">MIT · GitHub · v0.2 ↗</a></footer>
+<script type="module" src="popup.js"></script>
+</body></html>

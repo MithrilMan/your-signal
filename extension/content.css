@@ -1,0 +1,75 @@
+/* Never remove/reorder React nodes. All visual changes are reversible. */
+article[data-testid="tweet"].oya-annotated {
+  position:relative !important;
+  box-sizing:border-box !important;
+  padding-left:calc(var(--oya-post-padding, 16px) + 32px) !important;
+}
+article[data-testid="tweet"].oya-dim > :not([data-oya-host]) { opacity:.35 !important; }
+article[data-testid="tweet"].oya-collapse {
+  display:block !important;
+  min-height:88px !important;
+  height:auto !important;
+  padding:0 !important;
+}
+article[data-testid="tweet"].oya-collapse:not(.oya-peek):not(.oya-peek-closing) > :not([data-oya-host]) { display:none !important; }
+article[data-testid="tweet"].oya-collapse.oya-peek,
+article[data-testid="tweet"].oya-collapse.oya-peek-closing {
+  max-height:var(--oya-peek-height, 88px) !important;
+  overflow:clip !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek {
+  transition:max-height 560ms 70ms cubic-bezier(.18,.9,.2,1.06) !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek-stable {
+  transition:none !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek-closing {
+  transition:max-height 360ms cubic-bezier(.55,0,.78,.2) !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek.oya-peek-measuring {
+  max-height:none !important;
+  transition:none !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek > :not([data-oya-host]),
+article[data-testid="tweet"].oya-collapse.oya-peek-closing > :not([data-oya-host]) {
+  box-sizing:border-box !important;
+  width:auto !important;
+  max-width:calc(100% - 73px) !important;
+  margin-inline:52px 21px !important;
+  margin-bottom:14px !important;
+  transform-origin:top center !important;
+  will-change:opacity,transform,clip-path;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek:not(.oya-peek-stable) > :not([data-oya-host]) {
+  animation:oya-peek-unfold 560ms 70ms cubic-bezier(.18,.9,.2,1.06) both !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek-stable > :not([data-oya-host]) {
+  animation:none !important;
+}
+article[data-testid="tweet"].oya-collapse.oya-peek-closing > :not([data-oya-host]) {
+  pointer-events:none !important;
+  animation:oya-peek-fold 300ms cubic-bezier(.55,0,.78,.2) both !important;
+}
+@keyframes oya-peek-unfold {
+  0% { opacity:0; transform:perspective(700px) translateY(-22px) rotateX(-9deg) scaleY(.82); clip-path:inset(0 0 100% 0 round 0 0 14px 14px); }
+  36% { opacity:.28; clip-path:inset(0 0 52% 0 round 0 0 12px 12px); }
+  74% { opacity:.94; transform:perspective(700px) translateY(4px) rotateX(1deg) scaleY(1.015); clip-path:inset(0 0 0 0 round 0 0 8px 8px); }
+  100% { opacity:1; transform:perspective(700px) translateY(0) rotateX(0) scaleY(1); clip-path:inset(0 0 0 0 round 0); }
+}
+@keyframes oya-peek-fold {
+  0% { opacity:1; transform:perspective(700px) translateY(0) rotateX(0) scaleY(1); clip-path:inset(0 0 0 0 round 0); }
+  42% { opacity:.72; transform:perspective(700px) translateY(-3px) rotateX(-2deg) scaleY(.98); }
+  100% { opacity:0; transform:perspective(700px) translateY(-18px) rotateX(-8deg) scaleY(.72); clip-path:inset(0 0 100% 0 round 0 0 14px 14px); }
+}
+article[data-testid="tweet"].oya-hide,
+[data-testid="cellInnerDiv"].oya-hide-cell { display:none !important; }
+article[data-testid="tweet"].oya-ad-hide,
+[data-testid="cellInnerDiv"].oya-ad-hide-cell { display:none !important; }
+[data-oya-host] { box-sizing:border-box; }
+@media(prefers-reduced-motion:reduce){
+  article[data-testid="tweet"].oya-dim > :not([data-oya-host]),
+  article[data-testid="tweet"].oya-collapse.oya-peek,
+  article[data-testid="tweet"].oya-collapse.oya-peek-closing { transition:none!important; }
+  article[data-testid="tweet"].oya-collapse.oya-peek > :not([data-oya-host]),
+  article[data-testid="tweet"].oya-collapse.oya-peek-closing > :not([data-oya-host]) { animation:none!important; }
+}

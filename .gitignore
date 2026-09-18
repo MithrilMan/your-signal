@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.db
+*.db-*
+node_modules/
+release/
+test-results/
+.workbench/
+store-assets/*.zip
+eval/*results*.jsonl
+eval/*report.json

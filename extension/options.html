@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark"><title>Your Signal — A feed tuned to you</title>
+  <link rel="icon" href="assets/signal-mark.svg" type="image/svg+xml"><link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to your feed settings</a>
+<svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3z"/></symbol>
+  <symbol id="icon-link" viewBox="0 0 24 24"><path d="m10 14 4-4m-6 6-1 1a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m0 12a4 4 0 0 0 6 0l5-5a4 4 0 0 0-6-6l-1 1" transform="translate(1 0) scale(.9)"/></symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5 9 10 9 10s9-5 9-10V6zM12 8v5m0 3v1"/></symbol>
+  <symbol id="icon-bulb" viewBox="0 0 32 32"><path d="M11 22c0-5-6-5-6-12a11 11 0 0 1 22 0c0 7-6 7-6 12zm1 4h8m-6 4h4M12 12l4 4 4-4m-4 4v6"/></symbol>
+  <symbol id="icon-leaf" viewBox="0 0 32 32"><path d="M5 24C-1 8 17 8 27 2c4 21-7 29-20 21M3 30l18-20m-13 7 6 1m3-7 1-5"/></symbol>
+  <symbol id="icon-target" viewBox="0 0 32 32"><circle cx="15" cy="17" r="13"/><circle cx="15" cy="17" r="8"/><path d="m15 17 13-13m-6 0h6v6"/></symbol>
+</defs></svg>
+<header class="mobile-header">
+  <a class="brand-lockup compact" href="options.html" aria-label="Your Signal home"><span class="brand-word">YOUR <b>SIGNAL</b><i aria-hidden="true">╱</i></span><span class="brand-tagline">A feed tuned to you.</span></a>
+  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">Menu <span aria-hidden="true">☰</span></button>
+</header>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand-lockup" href="options.html" aria-label="Your Signal home"><span class="brand-word">YOUR<br><b>SIGNAL</b><i aria-hidden="true">╱</i></span><span class="brand-tagline">A feed tuned to you.</span></a>
+    <nav id="primary-nav" class="primary-nav" aria-label="Settings">
+      <button class="nav-item active" data-panel="algorithm"><svg><use href="#icon-home"/></svg> Your feed</button>
+      <button class="nav-item" data-panel="connection"><svg><use href="#icon-link"/></svg> Connection <span class="nav-dot" id="connection-dot" aria-hidden="true"></span></button>
+      <button class="nav-item" data-panel="privacy"><svg><use href="#icon-shield"/></svg> Privacy &amp; data</button>
+    </nav>
+    <div class="sidebar-collage" aria-hidden="true"><span class="paper-piece mustard"></span><span class="paper-piece sage"></span><p class="handwritten sidebar-note">Good<br>ideas find<br>good people.<span class="ink-line"></span></p><img class="sidebar-leaf" src="assets/pressed-leaf-desktop-480x720.webp" alt=""><p class="sidebar-manifesto">SAME<br>PLATFORM.<br>A MORE<br>YOU TIMELINE.<span class="ink-line"></span></p></div>
+    <div class="sidebar-bottom"><span class="handwritten">For X</span><span>Open source · v0.2</span></div>
+  </aside>
+  <main class="main-content" id="main-content" tabindex="-1">
+    <header class="topbar"><div class="breadcrumb">YOUR SPACE / <b id="page-label">YOUR FEED</b></div><div class="top-actions"><label class="theme-picker" for="theme">Theme <select id="theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label><span id="preview-banner" hidden>LOCAL PREVIEW</span><span class="save-state" id="save-state" role="status">Saved on this device</span></div></header>
+    <section id="algorithm-panel" class="panel">
+      <div class="dashboard-hero">
+        <h1>More of you.<br>Less of the noise.</h1>
+        <p class="intro">Choose what earns space in your feed. Every decision is reversible.</p>
+        <p class="handwritten hero-note" aria-hidden="true">A feed<br>that feels<br>like you.<span class="heart">♡</span></p>
+        <p class="handwritten corner-note" aria-hidden="true">Curiosity<br>today.<br>A brighter<br>tomorrow.<span class="ink-line"></span></p>
+        <div class="interest-portrait" aria-hidden="true"><img src="assets/pressed-leaf-compact-240x360.webp" alt=""><span class="handwritten portrait-note">Different interests.<br>A richer you.</span><div id="interest-chips"></div></div>
+      </div>
+      <div class="connection-strip">
+        <div id="onboarding" class="onboarding"><span class="connection-symbol" aria-hidden="true">!</span><div><b>Connection required</b><span>Connect a provider before enabling the filter.</span></div><button class="subtle-button" data-go="connection">Configure</button></div>
+        <button class="status-toggle" id="enabled-toggle" role="switch" aria-checked="false"><span class="pause-glyph" aria-hidden="true">Ⅱ</span><span id="enabled-label">Filter paused</span></button>
+      </div>
+      <div class="algorithm-layout">
+        <div class="settings-column">
+          <section class="setting-section profile-section" aria-labelledby="profile-title">
+            <div class="section-line"><h2 id="profile-title"><span>01 ·</span> Choose a starting point</h2><span class="handwritten section-note" aria-hidden="true">Different<br>ways in.<i class="sun-rays"></i></span></div>
+            <div class="presets" role="group" aria-label="Preset profiles">
+              <button class="preset" data-preset="builder" aria-pressed="true"><svg aria-hidden="true"><use href="#icon-bulb"/></svg><span><strong>Builder mode</strong><small>Ideas you can use</small></span></button>
+              <button class="preset" data-preset="curious" aria-pressed="false"><svg aria-hidden="true"><use href="#icon-leaf"/></svg><span><strong>Curiosity</strong><small>Let yourself be surprised</small></span></button>
+              <button class="preset" data-preset="focus" aria-pressed="false"><svg aria-hidden="true"><use href="#icon-target"/></svg><span><strong>Deep focus</strong><small>Go deeper</small></span></button>
+            </div>
+            <div id="saved-profiles" class="saved-profiles" hidden><label for="saved-profile">Your saved profiles</label><select id="saved-profile"><option value="">Choose a saved profile</option></select><button id="delete-profile" class="text-button" disabled>Delete profile</button></div>
+            <div class="interest-box"><label for="interests">What are you interested in right now?</label><div class="interest-input"><textarea id="interests" maxlength="400" rows="2" placeholder="Topics, not commands: software, photography, architecture…" aria-describedby="interest-help"></textarea><span class="handwritten" aria-hidden="true">Your interests<br>evolve. ⤶</span></div><div class="field-note interest-help" id="interest-help"><span>Topics in your own words.</span><span id="interest-count">0 / 400</span></div></div>
+          </section>
+          <section class="setting-section criteria-section" aria-labelledby="criteria-title">
+            <div class="section-line"><h2 id="criteria-title"><span>02 ·</span> Tune your preferences</h2><span class="handwritten section-note" aria-hidden="true">You shape<br>the feed.<i class="sun-rays"></i></span></div>
+            <div class="weights-card" id="weights"></div>
+          </section>
+          <section class="setting-section treatment-section" aria-labelledby="treatment-title">
+            <div class="section-line"><h2 id="treatment-title"><span>03 ·</span> Decide what changes</h2><span class="handwritten section-note" aria-hidden="true">Keep what<br>adds value.<i class="sun-rays"></i></span></div>
+            <div class="control-card"><div class="threshold-head"><div><label for="threshold">Your feed threshold</label><p>Posts below this score receive your chosen treatment.</p></div><div class="big-number"><output id="threshold-value" for="threshold">58</output></div></div><input id="threshold" type="range" min="0" max="100" value="58" aria-describedby="threshold-help"><div class="behavior-options"><label><input type="radio" name="behavior" value="dim" checked><span>Dim</span></label><label><input type="radio" name="behavior" value="collapse"><span>Collapse</span></label><label><input type="radio" name="behavior" value="hide"><span>Hide</span></label><label><input type="radio" name="behavior" value="label"><span>Label only</span></label></div><p class="control-foot" id="threshold-help">Uncertain results stay visible. You can always show a post.</p></div>
+          </section>
+        </div>
+        <aside class="preview-column" aria-label="Illustrative feed preview and local statistics">
+          <div class="feed-preview"><div class="preview-top"><h2>A glimpse of your feed</h2><span class="demo-tag">DEMO</span><i class="sun-rays" aria-hidden="true"></i></div><div id="preview-posts"></div><div class="preview-disclaimer"><span aria-hidden="true">ⓘ</span><p>Scores reflect your preferences, not the truth of a post.<small>Sample text and values, not live Jev results.</small></p></div></div>
+          <div class="stats-card"><h2>Today, on your device <span>UTC</span></h2><div class="stats-grid"><div><b id="stat-evaluated">0</b><span>Evaluations</span></div><div><b id="stat-cache">0</b><span>Cache hits</span></div><div><b id="stat-tokens">0</b><span>Input tokens</span></div></div></div>
+          <p class="handwritten preview-note" aria-hidden="true">Less noise.<br>More of you.<span class="ink-line"></span></p>
+        </aside>
+      </div>
+    </section>
+  <section id="connection-panel" class="panel" hidden>
+    <div class="page-heading"><div><div class="eyebrow"><span></span> YOUR KEY, YOUR CONTROL</div><h1>Connect<br>to <em>Jev.</em></h1><p class="intro">Your browser talks directly to TypeSafe with your own API key.</p></div></div>
+    <div class="connection-layout"><div>
+      <div class="connection-card"><span class="card-kicker">DIRECT CONNECTION</span><h2>Your Jev API key</h2><p class="field-note">Your key is sent only to TypeSafe. Your Signal has no server, user registration, analytics, or payment flow.</p><label for="jev-key">Jev API key</label><div class="input-row"><input id="jev-key" type="password" autocomplete="new-password" placeholder="Paste your API key"><button class="subtle-button" id="forget-key">Remove</button></div><label class="check-row"><input id="remember-key" type="checkbox"><span>Remember the key on this device</span></label><p class="field-note">Off by default. Without this option, the key is deleted when you close the browser. Browser storage is not an encrypted keychain.</p><div class="key-status" id="key-status">No key saved.</div></div>
+      <div class="button-row"><button class="primary-button" id="connect">Save connection <span>↗</span></button><button class="subtle-button" id="test-connection">Test connection</button></div><p class="field-note">When the filter is on, eligible post text and your interest topics are sent directly to TypeSafe. No private messages, cookies, X passwords, images, or videos are sent. The test checks key access without evaluating posts.</p>
+    </div><aside class="connection-aside"><span class="tiny-label">A TRANSPARENT FLOW</span><div class="flow-step"><b>01</b><div>The post is already loaded<small>The browser extracts text only.</small></div></div><div class="flow-line"></div><div class="flow-step"><b>02</b><div>One Jev evaluation<small>Multiple criteria, one request per post.</small></div></div><div class="flow-line"></div><div class="flow-step"><b>03</b><div>Your rules, applied locally<small>You choose the weights, threshold, and actions.</small></div></div><div class="aside-note">The model does not generate explanations or verify sources. We show numerical signals, not certainties.</div><div class="model-label" id="model-label">Jev · pinned model version</div></aside></div>
+  </section>
+  <section id="privacy-panel" class="panel" hidden>
+    <div class="page-heading"><div><div class="eyebrow"><span></span> PRIVATE BY CHOICE</div><h1>Control<br>stays <em>yours.</em></h1><p class="intro">Explicit permissions. No telemetry. No irreversible filtering.</p></div></div>
+    <div class="privacy-grid"><div class="connection-card"><h2>Where it works</h2><label class="check-row"><input type="checkbox" checked disabled><span>X Home <small>The For you and Following timelines.</small></span></label><label class="check-row"><input id="search-enabled" type="checkbox"><span>Also enable Search <small>Disabled by default.</small></span></label><label class="check-row"><input id="show-badges" type="checkbox" checked><span>Show scores in the feed</span></label><label class="check-row"><input id="hide-ads" type="checkbox"><span>Hide X ads <small>Detected locally before evaluation. X may change its labels.</small></span></label><p class="field-note">Profiles, notifications, messages, and other sections are excluded. Media-only posts stay unchanged.</p></div><div class="connection-card"><h2>Limits and safeguards</h2><label for="daily-limit">Maximum evaluation requests per day (UTC)</label><input id="daily-limit" type="number" min="10" max="10000" step="10"><label for="minimum-margin">Minimum margin for applying a filter</label><input id="minimum-margin" type="range" min="0" max="1" step="0.05"><div class="field-note">Margin: <output id="margin-value">0.35</output> · this is a heuristic, not calibrated accuracy.</div><p class="field-note">The limit also counts failed attempts and retries. Timeouts, exhausted quotas, or uncertain results leave the post visible. An evaluation already in progress may finish after you pause the filter.</p></div><div class="connection-card"><h2>Data on your device</h2><p>Preferences and credentials stay in extension storage. The session cache contains hashes and numerical results, not post text.</p><div class="button-row"><button id="clear-cache" class="subtle-button">Clear cache</button><button id="export-settings" class="subtle-button">Export preferences</button></div><p class="field-note">Keys are never included in exports. <a href="https://github.com/MithrilMan/your-signal" target="_blank" rel="noopener noreferrer">Inspect the source code</a>.</p></div></div>
+    <div class="privacy-notice"><b>An important distinction.</b> Settings and filtering decisions live in the extension, but Jev inference is remote. When filtering is enabled, eligible post text is sent directly to TypeSafe.</div>
+  </section>
+    <footer class="main-footer"><span>YOUR SIGNAL</span><span>Your preferences. Your perspective. Your feed.</span><span><a href="https://github.com/MithrilMan/your-signal" target="_blank" rel="noopener noreferrer">MIT · Source code ↗</a> · <a href="https://github.com/MithrilMan/your-signal/blob/master/PRIVACY.md" target="_blank" rel="noopener noreferrer">Privacy ↗</a></span></footer>
+  </main>
+</div>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<script type="module" src="ui.js"></script>
+</body>
+</html>
